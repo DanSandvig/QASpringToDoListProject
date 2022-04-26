@@ -7,5 +7,7 @@ import com.bae.qaspringtodolistproject.domain.ToDoListEntry;
 
 @Repository
 public interface ToDoListEntryRepo extends JpaRepository<ToDoListEntry, Long> {
-
+	
+	ToDoListEntry findToDoListEntryByTitle(String title);
+	
 }
