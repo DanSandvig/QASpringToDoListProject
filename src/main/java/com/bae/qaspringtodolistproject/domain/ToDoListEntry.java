@@ -25,4 +25,28 @@ public class ToDoListEntry {
 	
 	@Column(nullable = false)
 	private boolean complete;
+	
+	//Default Constructor
+	public ToDoListEntry() {
+		
+	}
+	
+	//Test Constructor
+	public ToDoListEntry(long id, int priority, String title, String description, boolean complete) {
+		super();
+		this.id = id;
+		this.priority = priority;
+		this.title = title;
+		this.description = description;
+		this.complete = complete;
+	}
+	
+	//Production Constructor	
+	public ToDoListEntry(int priority, String title, String description, boolean complete) {
+		super();
+		this.priority = priority;
+		this.title = title;
+		this.description = description;
+		this.complete = complete;
+	}
 }
