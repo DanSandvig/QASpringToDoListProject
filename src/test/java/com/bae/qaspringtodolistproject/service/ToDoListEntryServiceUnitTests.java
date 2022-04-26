@@ -93,4 +93,20 @@ public class ToDoListEntryServiceUnitTests {
 		Mockito.verify(toDoListEntryRepo, Mockito.times(1)).findById(1L);
 		Mockito.verify(toDoListEntryRepo, Mockito.times(1)).saveAndFlush(testInput);
 	}
+	
+	//Delete
+	
+	@Test
+	public void testDelete() {
+		ToDoListEntry mockOutput = new ToDoListEntry(1L, 1, "KIS", "Stupid", false);
+		
+		Mockito.when(toDoListEntryRepo.findById(1L)).thenReturn(Optional.of(mockOutput));
+		Mockito.when(toDoListEntryRepo.existsById(1L)).thenReturn(false);
+		
+		assertEquals(true, toDoListEntryService.delete(1L));
+		
+		Mockito.verify(toDoListEntryRepo, Mockito.times(1)).findById(1L);
+		Mockito.verify(toDoListEntryRepo, Mockito.times(1)).deleteById(1L);
+		Mockito.verify(toDoListEntryRepo, Mockito.times(1)).existsById(1L);
+	}
 }
