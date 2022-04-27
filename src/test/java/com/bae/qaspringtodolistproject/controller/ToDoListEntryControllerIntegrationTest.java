@@ -2,6 +2,7 @@ package com.bae.qaspringtodolistproject.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -40,11 +41,18 @@ public class ToDoListEntryControllerIntegrationTest {
 	
 	@Test
 	public void testCreate() throws Exception {
+		
+		//Create variables for testing
+		
 		ToDoListEntry testInput = new ToDoListEntry(3, "Again?", "Really?", false);
 		ToDoListEntry expectedOutput = new ToDoListEntry(2L, 3, "Again?", "Really?", false);
 		
+		//Convert java objects to JSON
+		
 		String testInputAsJson = mapper.writeValueAsString(testInput);
 		String expectedOutputAsJson = mapper.writeValueAsString(expectedOutput);
+		
+		//Test the controller method
 		
 		mvc.perform(post("/todolist/create")
 				.content(testInputAsJson)
@@ -91,5 +99,20 @@ public class ToDoListEntryControllerIntegrationTest {
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().json(expectedOutputAsJson));
+	}
+	
+	//Update
+	
+	@Test
+	public void testUpdate() throws Exception {
+		ToDoListEntry testInput = new ToDoListEntry(1L, 1, "KIS", "Stupid", true);
+		
+		String testInputAsJson = mapper.writeValueAsString(testInput);
+		
+		mvc.perform(put("/todolist/update/1")
+				.content(testInputAsJson)
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().json(testInputAsJson));
 	}
 }
