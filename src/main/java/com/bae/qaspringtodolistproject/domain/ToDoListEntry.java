@@ -94,7 +94,7 @@ public class ToDoListEntry {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(complete, description, id, priority, title);
+		return Objects.hash(complete, description, priority, title);
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class ToDoListEntry {
 		if (getClass() != obj.getClass())
 			return false;
 		ToDoListEntry other = (ToDoListEntry) obj;
-		return complete == other.complete && Objects.equals(description, other.description) && id == other.id
+		return complete == other.complete && Objects.equals(description, other.description)
 				&& priority == other.priority && Objects.equals(title, other.title);
 	}
 

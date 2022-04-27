@@ -1,0 +1,1 @@
+INSERT INTO `to_do_list_entry` (`priority`, `title`, `description`, `complete`) VALUES (1, 'KIS', 'Stupid', false);
