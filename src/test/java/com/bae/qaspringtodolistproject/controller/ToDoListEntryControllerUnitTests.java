@@ -1,8 +1,14 @@
 package com.bae.qaspringtodolistproject.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.net.ssl.SSLEngineResult.Status;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,13 +43,22 @@ public class ToDoListEntryControllerUnitTests {
 	
 	@Test
 	public void testCreate() throws Exception {
+		
+		//Create variables for testing
+		
 		ToDoListEntry testInput = new ToDoListEntry(1, "KIS", "Stupid", false);
 		ToDoListEntry mockOutput = new ToDoListEntry(1L, 1, "KIS", "Stupid", false);
+		
+		//Convert java objects to JSON
 		
 		String testInputAsJson = mapper.writeValueAsString(testInput);
 		String mockOutputAsJson = mapper.writeValueAsString(mockOutput);
 		
+		//Instruct Mockito how to respond to the service method call
+		
 		Mockito.when(toDoListEntryService.create(testInput)).thenReturn(mockOutput);
+		
+		//Test the controller method
 		
 		mvc.perform(post("/todolist/create")
 				.content(testInputAsJson)
@@ -51,4 +66,51 @@ public class ToDoListEntryControllerUnitTests {
 				.andExpect(status().isCreated())
 				.andExpect(content().json(mockOutputAsJson));
 	}
+	
+	//Get - Read
+	
+	@Test
+	public void testGetAll() throws Exception {
+		List<ToDoListEntry> mockOutput = new ArrayList<>();
+		mockOutput.add(new ToDoListEntry(1L, 1, "KIS", "Stupid", false));
+		mockOutput.add(new ToDoListEntry(2L, 3, "Again?", "Really?", false));
+		
+		String mockOutputAsJson = mapper.writeValueAsString(mockOutput);
+		
+		Mockito.when(toDoListEntryService.getAll()).thenReturn(mockOutput);
+		
+		mvc.perform(get("/todolist/getall")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().json(mockOutputAsJson));
+	}
+	
+	@Test
+	public void testGetById() throws Exception {
+		ToDoListEntry mockOutput = new ToDoListEntry(1L, 1, "KIS", "Stupid", false);
+		
+		String mockOutputAsJson = mapper.writeValueAsString(mockOutput);
+		
+		Mockito.when(toDoListEntryService.getById(1L)).thenReturn(mockOutput);
+		
+		mvc.perform(get("/todolist/getbyid/1")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().json(mockOutputAsJson));
+	}
+	
+	@Test
+	public void testGetByTitle() throws Exception {
+		ToDoListEntry mockOutput = new ToDoListEntry(1L, 1, "KIS", "Stupid", false);
+		
+		String mockOutputAsJson = mapper.writeValueAsString(mockOutput);
+		
+		Mockito.when(toDoListEntryService.getByTitle("KIS")).thenReturn(mockOutput);
+		
+		mvc.perform(get("/todolist/getbytitle/KIS")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().json(mockOutputAsJson));
+	}
+	
 }
