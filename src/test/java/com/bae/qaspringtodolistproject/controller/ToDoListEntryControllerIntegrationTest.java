@@ -1,8 +1,12 @@
 package com.bae.qaspringtodolistproject.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,16 +41,55 @@ public class ToDoListEntryControllerIntegrationTest {
 	@Test
 	public void testCreate() throws Exception {
 		ToDoListEntry testInput = new ToDoListEntry(3, "Again?", "Really?", false);
-		ToDoListEntry mockOutput = new ToDoListEntry(2L, 3, "Again?", "Really?", false);
+		ToDoListEntry expectedOutput = new ToDoListEntry(2L, 3, "Again?", "Really?", false);
 		
 		String testInputAsJson = mapper.writeValueAsString(testInput);
-		String mockOutputAsJson = mapper.writeValueAsString(mockOutput);
+		String expectedOutputAsJson = mapper.writeValueAsString(expectedOutput);
 		
 		mvc.perform(post("/todolist/create")
 				.content(testInputAsJson)
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isCreated())
-				.andExpect(content().json(mockOutputAsJson));
+				.andExpect(content().json(expectedOutputAsJson));
 	}
 	
+	
+	//Get - Read
+	
+	@Test
+	public void testGetAll() throws Exception {
+		List<ToDoListEntry> expectedOutput = new ArrayList<>();
+		expectedOutput.add(new ToDoListEntry(1L, 1, "KIS", "Stupid", false));
+		
+		String expectedOutputAsJson = mapper.writeValueAsString(expectedOutput);
+		
+		mvc.perform(get("/todolist/getall")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().json(expectedOutputAsJson));
+	}
+	
+	@Test
+	public void testGetById() throws Exception {
+		ToDoListEntry expectedOutput = new ToDoListEntry(1L, 1, "KIS", "Stupid", false);
+		
+		String expectedOutputAsJson = mapper.writeValueAsString(expectedOutput);
+		
+		mvc.perform(get("/todolist/getbyid/1")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().json(expectedOutputAsJson));
+	}
+	
+	@Test
+	public void testGetByTitle() throws Exception {
+		ToDoListEntry expectedOutput = new ToDoListEntry(1L, 1, "KIS", "Stupid", false);
+		
+		String expectedOutputAsJson = mapper.writeValueAsString(expectedOutput);
+		
+		mvc.perform(get("/todolist/getbytitle/KIS")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().json(expectedOutputAsJson));
+	}
 }
