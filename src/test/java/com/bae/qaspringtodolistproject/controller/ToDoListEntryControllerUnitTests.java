@@ -1,5 +1,6 @@
 package com.bae.qaspringtodolistproject.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -8,8 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.net.ssl.SSLEngineResult.Status;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -129,6 +128,20 @@ public class ToDoListEntryControllerUnitTests {
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().json(testInputAsJson));
+	}
+	
+	//Delete - Delete
+	
+	@Test
+	public void testDelete() throws Exception {
+		Mockito.when(toDoListEntryService.delete(1L)).thenReturn(true);
+		Mockito.when(toDoListEntryService.delete(2L)).thenReturn(false);
+		
+		mvc.perform(delete("/todolist/delete/1"))
+				.andExpect(status().isNoContent());
+		
+		mvc.perform(delete("/todolist/delete/2"))
+				.andExpect(status().isInternalServerError());
 	}
 	
 }
