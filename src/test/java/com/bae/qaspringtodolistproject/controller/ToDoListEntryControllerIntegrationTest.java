@@ -1,5 +1,6 @@
 package com.bae.qaspringtodolistproject.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -101,7 +102,7 @@ public class ToDoListEntryControllerIntegrationTest {
 				.andExpect(content().json(expectedOutputAsJson));
 	}
 	
-	//Update
+	//Put - Update
 	
 	@Test
 	public void testUpdate() throws Exception {
@@ -114,5 +115,13 @@ public class ToDoListEntryControllerIntegrationTest {
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().json(testInputAsJson));
+	}
+	
+	//Delete - Delete
+	
+	@Test
+	public void testDelete() throws Exception {
+		mvc.perform(delete("/todolist/delete/1"))
+			.andExpect(status().isNoContent());
 	}
 }
