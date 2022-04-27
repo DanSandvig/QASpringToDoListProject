@@ -9,11 +9,11 @@
 </head>
 <body>
     <div class="container mt-3">
-        <form>
+        <form id="newtodo">
             <div class="row align-items-end">
                 <div class="col">
-                    <label for="todopriority" class="form-label">Set Priority:</label>
-                    <select class="form-select" id="sel1" name="todopriority">
+                    <label for="priority" class="form-label">Set Priority:</label>
+                    <select class="form-select" name="priority">
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -28,7 +28,7 @@
                     <input type="text" maxlength="255" class="form-control" placeholder="Do the thing this way!" name="description">
                 </div>
                 <div class="col">
-                    <button type="button" class="btn btn-primary" id="addtodo">Add The Thing!</button>
+                    <input class="btn btn-primary" type="submit" value="Add The Thing!">
                 </div>
             </div>
         </form>
@@ -37,5 +37,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./main.js"></script>
 </body>
 </html>
