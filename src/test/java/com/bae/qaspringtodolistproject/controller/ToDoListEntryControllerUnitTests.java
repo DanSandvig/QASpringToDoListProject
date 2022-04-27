@@ -2,6 +2,7 @@ package com.bae.qaspringtodolistproject.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -111,6 +112,23 @@ public class ToDoListEntryControllerUnitTests {
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().json(mockOutputAsJson));
+	}
+	
+	//Put - Update
+	
+	@Test
+	public void testUpdate() throws Exception {
+		ToDoListEntry testInput = new ToDoListEntry(1L, 1, "KIS", "Stupid", true);
+		
+		String testInputAsJson = mapper.writeValueAsString(testInput);
+		
+		Mockito.when(toDoListEntryService.update(1L, testInput)).thenReturn(testInput);
+		
+		mvc.perform(put("/todolist/update/1")
+				.content(testInputAsJson)
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().json(testInputAsJson));
 	}
 	
 }
