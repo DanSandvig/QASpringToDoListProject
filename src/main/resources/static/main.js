@@ -16,6 +16,9 @@ const addNewToDo = () => {
     axios.post(`${baseURL}/create`, data)
         .then((res) => {console.log(res);})
         .catch((err) => {console.log(err);});
+
+    NEW_TODO_FORM.reset();
+    NEW_TODO_FORM.priority.focus();
 }
 
 NEW_TODO_FORM.addEventListener("submit", (e) => {
