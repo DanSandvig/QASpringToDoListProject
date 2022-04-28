@@ -16,7 +16,6 @@ const changeToTextInput = (tdElement, toDoEntry, changeValue) => {
     newInputField.setAttribute("type", "text");
     newInputField.setAttribute("maxlength", 255);
     newInputField.setAttribute("placeholder", tdElement.innerText);
-    newInputField.setAttribute("name", "newData");
     newInputField.classList.add("form-control");
 
     //Blank out current text
@@ -50,11 +49,8 @@ const createNewRow = (toDoEntry) => {
 
     //Creates remaining elements as standard table data cells
     const priorityCell = document.createElement("td");
-    //Test clickability
-    const titleCell = document.createElement("td");
-    
-    const descriptionCell = document.createElement("td");
-    
+    const titleCell = document.createElement("td");   
+    const descriptionCell = document.createElement("td");    
     const completeCell = document.createElement("td");
     const deleteCell = document.createElement("td");
 
@@ -158,7 +154,7 @@ const getSingleToDo = (searchtype) => {
             DYNAMIC_TABLE.innerHTML ="";
 
             //Replaces table with a single entry
-            createNewRow(todoentry.id, todoentry.priority, todoentry.title, todoentry.description, todoentry.complete)
+            createNewRow(todoentry)
         })
         .catch((err) => { console.log(err); });
 
@@ -177,7 +173,7 @@ const getSingleToDo = (searchtype) => {
             DYNAMIC_TABLE.innerHTML ="";
 
             //Replaces table with a single entry
-            createNewRow(todoentry.id, todoentry.priority, todoentry.title, todoentry.description, todoentry.complete)
+            createNewRow(todoentry)
         })
         .catch((err) => { console.log(err); });
 
@@ -209,6 +205,8 @@ const deleteToDo = (id) => {
 }
 
 //Event Listeners
+
+window.onload = () => getAllEntries();
 
 NEW_TODO_FORM.addEventListener("submit", (e) => {
     e.preventDefault();     //Prevents normal submission
