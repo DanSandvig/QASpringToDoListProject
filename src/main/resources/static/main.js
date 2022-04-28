@@ -5,6 +5,8 @@
 const baseURL = "http://localhost:8080/todolist";
 const NEW_TODO_FORM = document.getElementById("newtodo");
 const DYNAMIC_TABLE = document.getElementById("dynamicTable");
+const FIND_TODO_ID = document.getElementById("findtodobyid");
+const FIND_TODO_TITLE = document.getElementById("findtodobytitle");
 
 //Post - Create
 
@@ -82,12 +84,61 @@ const getAllEntries = () => {
         .catch((err) => { console.log(err); });
 }
 
+const getSingleToDo = (searchtype) => {
+    if (searchtype === "id") {
+        //Gets the id from the form
+        const searchValue = FIND_TODO_ID.id.value;
 
+        //Searches by id on correct endpoint
+        axios.get(`${baseURL}/getbyid/${searchValue}`)
+        .then((res) => {
+            const todoentry = res.data;
+            
+            //Clears current table
+            DYNAMIC_TABLE.innerHTML ="";
 
+            //Replaces table with a single entry
+            createNewRow(todoentry.id, todoentry.priority, todoentry.title, todoentry.description, todoentry.complete)
+        })
+        .catch((err) => { console.log(err); });
+
+        FIND_TODO_ID.reset();
+        FIND_TODO_ID.id.focus();
+    } else if (searchtype === "title") {
+        //Gets the title from the form
+        const searchValue = FIND_TODO_TITLE.title.value;
+
+        //Searches by title on correct endpoint
+        axios.get(`${baseURL}/getbytitle/${searchValue}`)
+        .then((res) => {
+            const todoentry = res.data;
+            
+            //Clears current table
+            DYNAMIC_TABLE.innerHTML ="";
+
+            //Replaces table with a single entry
+            createNewRow(todoentry.id, todoentry.priority, todoentry.title, todoentry.description, todoentry.complete)
+        })
+        .catch((err) => { console.log(err); });
+
+        FIND_TODO_TITLE.reset();
+        FIND_TODO_TITLE.title.focus();
+    }
+}
 
 //Event Listeners
 
 NEW_TODO_FORM.addEventListener("submit", (e) => {
     e.preventDefault();     //Prevents normal submission
     addNewToDo();           //Starts axios post request
+});
+
+FIND_TODO_ID.addEventListener("submit", (e) => {
+    e.preventDefault();     //Prevents normal submission
+    getSingleToDo("id");    //Starts axios get request
+});
+
+FIND_TODO_TITLE.addEventListener("submit", (e) => {
+    e.preventDefault();     //Prevents normal submission
+    getSingleToDo("title"); //Starts axios get request
 });
