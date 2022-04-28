@@ -9,6 +9,7 @@ const FIND_TODO_ID = document.getElementById("findtodobyid");
 const FIND_TODO_TITLE = document.getElementById("findtodobytitle");
 
 //Non-REST methods
+
 const changeToTextInput = (tdElement, toDoEntry, changeValue) => {
 
     //Create the new input element
@@ -140,46 +141,37 @@ const getAllEntries = () => {
         .catch((err) => { console.log(err); });
 }
 
-const getSingleToDo = (searchtype) => {
-    if (searchtype === "id") {
-        //Gets the id from the form
-        const searchValue = FIND_TODO_ID.id.value;
+const getSingleToDo = (searchType) => {
+    //Gets sets search value depending on get type
+    
+    let searchValue;
 
-        //Searches by id on correct endpoint
-        axios.get(`${baseURL}/getbyid/${searchValue}`)
-        .then((res) => {
-            const todoentry = res.data;
-            
-            //Clears current table
-            DYNAMIC_TABLE.innerHTML ="";
+    if (searchType === "getbyid") {
+        searchValue = FIND_TODO_ID.id.value;
+    } else if (searchType === "getbytitle") {
+        searchValue = FIND_TODO_TITLE.title.value;
+    }
 
-            //Replaces table with a single entry
-            createNewRow(todoentry)
-        })
-        .catch((err) => { console.log(err); });
+    //Searches by given endpoint using given value
+    axios.get(`${baseURL}/${searchType}/${searchValue}`)
+    .then((res) => {
+        const todoentry = res.data;
+        
+        //Clears current table
+        DYNAMIC_TABLE.innerHTML ="";
 
+        //Replaces table with a single entry
+        createNewRow(todoentry)
+    })
+    .catch((err) => { console.log(err); });
+
+    if (searchType === "getbyid") {
         FIND_TODO_ID.reset();
         FIND_TODO_ID.id.focus();
-    } else if (searchtype === "title") {
-        //Gets the title from the form
-        const searchValue = FIND_TODO_TITLE.title.value;
-
-        //Searches by title on correct endpoint
-        axios.get(`${baseURL}/getbytitle/${searchValue}`)
-        .then((res) => {
-            const todoentry = res.data;
-            
-            //Clears current table
-            DYNAMIC_TABLE.innerHTML ="";
-
-            //Replaces table with a single entry
-            createNewRow(todoentry)
-        })
-        .catch((err) => { console.log(err); });
-
+    } else if (searchType === "getbytitle") {
         FIND_TODO_TITLE.reset();
         FIND_TODO_TITLE.title.focus();
-    }
+    }   
 }
 
 // Put - Update
@@ -209,16 +201,16 @@ const deleteToDo = (id) => {
 window.onload = () => getAllEntries();
 
 NEW_TODO_FORM.addEventListener("submit", (e) => {
-    e.preventDefault();     //Prevents normal submission
-    addNewToDo();           //Starts axios post request
+    e.preventDefault();             //Prevents normal submission
+    addNewToDo();                   //Starts axios post request
 });
 
 FIND_TODO_ID.addEventListener("submit", (e) => {
-    e.preventDefault();     //Prevents normal submission
-    getSingleToDo("id");    //Starts axios get request
+    e.preventDefault();             //Prevents normal submission
+    getSingleToDo("getbyid");       //Starts axios get request
 });
 
 FIND_TODO_TITLE.addEventListener("submit", (e) => {
-    e.preventDefault();     //Prevents normal submission
-    getSingleToDo("title"); //Starts axios get request
+    e.preventDefault();             //Prevents normal submission
+    getSingleToDo("getbytitle");    //Starts axios get request
 });
