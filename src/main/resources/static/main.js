@@ -10,6 +10,7 @@ const FIND_TODO_TITLE = document.getElementById("findtodobytitle");
 
 //Non-REST methods
 
+//Allows in table editing of text fields
 const changeToTextInput = (tdElement, toDoEntry, changeValue) => {
 
     //Create the new input element
@@ -39,6 +40,29 @@ const changeToTextInput = (tdElement, toDoEntry, changeValue) => {
     });
 }
 
+//Allows in table editing of priority field
+const changeToSelectInput = (tdElement, toDoEntry) => {
+    //Creates new select field
+    const newSelectField = document.createElement("select");
+    newSelectField.classList.add("form-select");
+    newSelectField.innerHTML = "<option>1</option><option>2</option><option>3</option>";
+
+    //Blanks out existing text
+    tdElement.innerText = "";
+
+    tdElement.appendChild(newSelectField);
+
+    newSelectField.focus();
+
+    //Updates priority when value altered
+    newSelectField.addEventListener("change", () => {
+        toDoEntry.priority = newSelectField.value;
+
+        updateToDo(toDoEntry);
+    });
+}
+
+//Takes a todo entry and splits it out into the table
 const createNewRow = (toDoEntry) => {
     
     //Creates new row
@@ -89,6 +113,8 @@ const createNewRow = (toDoEntry) => {
     completeCell.appendChild(thisComplete);
     deleteCell.appendChild(thisDeleteButton);
 
+    //Adds listeners to enable in-table editing
+    priorityCell.addEventListener("click", () => changeToSelectInput(priorityCell, toDoEntry));
     titleCell.addEventListener("click", () => changeToTextInput(titleCell, toDoEntry, "title"));
     descriptionCell.addEventListener("click", () => changeToTextInput(descriptionCell, toDoEntry, "description"));
 
