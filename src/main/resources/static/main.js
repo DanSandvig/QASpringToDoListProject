@@ -9,7 +9,7 @@ const FIND_TODO_ID = document.getElementById("findtodobyid");
 const FIND_TODO_TITLE = document.getElementById("findtodobytitle");
 
 //Non-REST methods
-const changeToTextInput = (tdElement) => {
+const changeToTextInput = (tdElement, toDoEntry, changeValue) => {
 
     //Create the new input element
     const newInputField = document.createElement("input");
@@ -26,6 +26,17 @@ const changeToTextInput = (tdElement) => {
     tdElement.appendChild(newInputField);
 
     newInputField.focus();
+
+    newInputField.addEventListener("change", () => {
+
+        if (changeValue === "title") {
+            toDoEntry.title = newInputField.value;
+        } else if (changeValue === "description") {
+            toDoEntry.description = newInputField.value;
+        }
+
+        updateToDo(toDoEntry);
+    });
 }
 
 const createNewRow = (toDoEntry) => {
@@ -81,8 +92,8 @@ const createNewRow = (toDoEntry) => {
     completeCell.appendChild(thisComplete);
     deleteCell.appendChild(thisDeleteButton);
 
-    titleCell.addEventListener("click", () => changeToTextInput(titleCell));
-    descriptionCell.addEventListener("click", () => changeToTextInput(descriptionCell));
+    titleCell.addEventListener("click", () => changeToTextInput(titleCell, toDoEntry, "title"));
+    descriptionCell.addEventListener("click", () => changeToTextInput(descriptionCell, toDoEntry, "description"));
 
     newRow.append(idCell, priorityCell, titleCell, descriptionCell, completeCell, deleteCell);
 
