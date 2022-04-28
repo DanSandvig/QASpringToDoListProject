@@ -67,12 +67,16 @@ const createNewRow = (toDoEntry) => {
         titleCell.style.textDecoration = "line-through";
         descriptionCell.style.textDecoration = "line-through";
     }
+    thisComplete.addEventListener("change", () => {
+        toDoEntry.complete = thisComplete.checked;
+        updateToDo(toDoEntry);
+    });
 
     //Create button for delete function
     const thisDeleteButton = document.createElement("button");
     thisDeleteButton.innerText = "Delete the thing!";
     thisDeleteButton.classList.add("btn", "btn-danger", "btn-sm");
-    thisDeleteButton.addEventListener("click", () => deleteToDo(id));
+    thisDeleteButton.addEventListener("click", () => deleteToDo(toDoEntry.id));
 
     //Appends elemements appropriately
     idCell.appendChild(thisId);
@@ -142,6 +146,17 @@ const getSingleToDo = (searchtype) => {
         FIND_TODO_TITLE.reset();
         FIND_TODO_TITLE.title.focus();
     }
+}
+
+// Put - Update
+
+const updateToDo = (updatedToDo) => {
+    axios.put(`${baseURL}/update/${updatedToDo.id}`, updatedToDo)
+        .then((res) => {
+            getAllEntries();
+            console.log(res);
+        })
+        .catch((err) => { console.log(err); });
 }
 
 // Delete - Delete
