@@ -49,6 +49,7 @@ const createNewRow = (id, priority, title, description, complete) => {
     const titleCell = document.createElement("td");
     const descriptionCell = document.createElement("td");
     const completeCell = document.createElement("td");
+    const deleteCell = document.createElement("td");
 
     //Creates text nodes from parameters
     const thisId = document.createTextNode(id);
@@ -57,14 +58,21 @@ const createNewRow = (id, priority, title, description, complete) => {
     const thisDescription = document.createTextNode(description);
     const thisComplete = document.createTextNode(complete);
 
+    //Create button for delete function
+    const thisDeleteButton = document.createElement("button");
+    thisDeleteButton.innerText = "Delete the thing!";
+    thisDeleteButton.classList.add("btn", "btn-danger", "btn-sm");
+    thisDeleteButton.addEventListener("click", () => deleteToDo(id));
+
     //Appends elemements appropriately
     idCell.appendChild(thisId);
     priorityCell.appendChild(thisPriority);
     titleCell.appendChild(thisTitle);
     descriptionCell.appendChild(thisDescription);
     completeCell.appendChild(thisComplete);
+    deleteCell.appendChild(thisDeleteButton);
 
-    newRow.append(idCell, priorityCell, titleCell, descriptionCell, completeCell);
+    newRow.append(idCell, priorityCell, titleCell, descriptionCell, completeCell, deleteCell);
 
     DYNAMIC_TABLE.appendChild(newRow);
 }
@@ -124,6 +132,17 @@ const getSingleToDo = (searchtype) => {
         FIND_TODO_TITLE.reset();
         FIND_TODO_TITLE.title.focus();
     }
+}
+
+// Delete - Delete
+
+const deleteToDo = (id) => {
+    axios.delete(`${baseURL}/delete/${id}`)
+        .then((res) => {
+            getAllEntries();
+            console.log(res);
+        })
+        .catch((err) => { console.log(err); });
 }
 
 //Event Listeners
