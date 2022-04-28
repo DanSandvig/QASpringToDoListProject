@@ -56,7 +56,13 @@ const createNewRow = (id, priority, title, description, complete) => {
     const thisPriority = document.createTextNode(priority);
     const thisTitle = document.createTextNode(title);
     const thisDescription = document.createTextNode(description);
-    const thisComplete = document.createTextNode(complete);
+
+    //Create checkbox for complete status
+
+    const thisComplete = document.createElement("input");
+    thisComplete.classList.add("form-check-input");
+    thisComplete.setAttribute("type", "checkbox");
+    if (complete) thisComplete.setAttribute("checked");
 
     //Create button for delete function
     const thisDeleteButton = document.createElement("button");
