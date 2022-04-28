@@ -62,7 +62,11 @@ const createNewRow = (id, priority, title, description, complete) => {
     const thisComplete = document.createElement("input");
     thisComplete.classList.add("form-check-input");
     thisComplete.setAttribute("type", "checkbox");
-    if (complete) thisComplete.setAttribute("checked");
+    thisComplete.checked = complete;
+    if (complete) {
+        titleCell.style.textDecoration = "line-through";
+        descriptionCell.style.textDecoration = "line-through";
+    }
 
     //Create button for delete function
     const thisDeleteButton = document.createElement("button");
