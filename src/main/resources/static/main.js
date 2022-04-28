@@ -8,32 +8,25 @@ const DYNAMIC_TABLE = document.getElementById("dynamicTable");
 const FIND_TODO_ID = document.getElementById("findtodobyid");
 const FIND_TODO_TITLE = document.getElementById("findtodobytitle");
 
-//Post - Create
+//Non-REST methods
+const changeToTextInput = (tdElement) => {
 
-const addNewToDo = () => {
-    //Creates data from current form values
-    const data = {
-        priority: NEW_TODO_FORM.priority.value,
-        title: NEW_TODO_FORM.title.value,
-        description: NEW_TODO_FORM.description.value,
-        complete: false
-    }
+    //Create the new input element
+    const newInputField = document.createElement("input");
+    newInputField.setAttribute("type", "text");
+    newInputField.setAttribute("maxlength", 255);
+    newInputField.setAttribute("placeholder", tdElement.innerText);
+    newInputField.setAttribute("name", "newData");
+    newInputField.classList.add("form-control");
 
-    //Submits to api using axios post request
-    axios.post(`${baseURL}/create`, data)
-        .then((res) => { 
-            console.log(res); 
-            
-            //Updates Table
-            getAllEntries();
-        })
-        .catch((err) => { console.log(err); });
+    //Blank out current text
+    tdElement.innerText = "";
 
-    NEW_TODO_FORM.reset();
-    NEW_TODO_FORM.priority.focus();
+    //Append new element to the table cell
+    tdElement.appendChild(newInputField);
+
+    newInputField.focus();
 }
-
-//Get - Read
 
 const createNewRow = (toDoEntry) => {
     
@@ -46,8 +39,11 @@ const createNewRow = (toDoEntry) => {
 
     //Creates remaining elements as standard table data cells
     const priorityCell = document.createElement("td");
+    //Test clickability
     const titleCell = document.createElement("td");
+    
     const descriptionCell = document.createElement("td");
+    
     const completeCell = document.createElement("td");
     const deleteCell = document.createElement("td");
 
@@ -58,7 +54,6 @@ const createNewRow = (toDoEntry) => {
     const thisDescription = document.createTextNode(toDoEntry.description);
 
     //Create checkbox for complete status
-
     const thisComplete = document.createElement("input");
     thisComplete.classList.add("form-check-input");
     thisComplete.setAttribute("type", "checkbox");
@@ -86,10 +81,42 @@ const createNewRow = (toDoEntry) => {
     completeCell.appendChild(thisComplete);
     deleteCell.appendChild(thisDeleteButton);
 
+    titleCell.addEventListener("click", () => changeToTextInput(titleCell));
+    descriptionCell.addEventListener("click", () => changeToTextInput(descriptionCell));
+
     newRow.append(idCell, priorityCell, titleCell, descriptionCell, completeCell, deleteCell);
 
     DYNAMIC_TABLE.appendChild(newRow);
 }
+
+//HTTP requests and such
+
+//Post - Create
+
+const addNewToDo = () => {
+    //Creates data from current form values
+    const data = {
+        priority: NEW_TODO_FORM.priority.value,
+        title: NEW_TODO_FORM.title.value,
+        description: NEW_TODO_FORM.description.value,
+        complete: false
+    }
+
+    //Submits to api using axios post request
+    axios.post(`${baseURL}/create`, data)
+        .then((res) => { 
+            console.log(res); 
+            
+            //Updates Table
+            getAllEntries();
+        })
+        .catch((err) => { console.log(err); });
+
+    NEW_TODO_FORM.reset();
+    NEW_TODO_FORM.priority.focus();
+}
+
+//Get - Read
 
 const getAllEntries = () => {
     axios.get(`${baseURL}/getall`)
