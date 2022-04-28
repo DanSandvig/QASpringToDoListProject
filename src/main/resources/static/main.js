@@ -35,7 +35,7 @@ const addNewToDo = () => {
 
 //Get - Read
 
-const createNewRow = (id, priority, title, description, complete) => {
+const createNewRow = (toDoEntry) => {
     
     //Creates new row
     const newRow = document.createElement("tr");
@@ -52,18 +52,18 @@ const createNewRow = (id, priority, title, description, complete) => {
     const deleteCell = document.createElement("td");
 
     //Creates text nodes from parameters
-    const thisId = document.createTextNode(id);
-    const thisPriority = document.createTextNode(priority);
-    const thisTitle = document.createTextNode(title);
-    const thisDescription = document.createTextNode(description);
+    const thisId = document.createTextNode(toDoEntry.id);
+    const thisPriority = document.createTextNode(toDoEntry.priority);
+    const thisTitle = document.createTextNode(toDoEntry.title);
+    const thisDescription = document.createTextNode(toDoEntry.description);
 
     //Create checkbox for complete status
 
     const thisComplete = document.createElement("input");
     thisComplete.classList.add("form-check-input");
     thisComplete.setAttribute("type", "checkbox");
-    thisComplete.checked = complete;
-    if (complete) {
+    thisComplete.checked = toDoEntry.complete;
+    if (toDoEntry.complete) {
         titleCell.style.textDecoration = "line-through";
         descriptionCell.style.textDecoration = "line-through";
     }
@@ -96,8 +96,8 @@ const getAllEntries = () => {
             DYNAMIC_TABLE.innerHTML ="";
 
             //Recreates table from scratch (presumably there's a better way?)
-            alltodos.forEach(todoentry => 
-                createNewRow(todoentry.id, todoentry.priority, todoentry.title, todoentry.description, todoentry.complete))
+            alltodos.forEach(toDoEntry => 
+                createNewRow(toDoEntry))
         })
         .catch((err) => { console.log(err); });
 }
