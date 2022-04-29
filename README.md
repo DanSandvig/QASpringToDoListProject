@@ -2,7 +2,7 @@
 
 ## Description
 
-A simple web-browser todo list app which will enable you to keep track of your ever-growing list of uncompleted tasks
+A simple java Spring Boot todo list app accessed through any web browser which will enable you to keep track of your ever-growing list of uncompleted tasks!
 
 ## Installation Requirements
 <details>
