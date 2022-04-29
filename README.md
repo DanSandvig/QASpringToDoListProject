@@ -18,3 +18,14 @@ In order to run the .jar file that contains the application you will need the fo
 When setting the password for your MySQL server, you will need to ensure it is set to "thanks4allthefish!" (without the quotation marks) for the application to connect successfully.
   
 </details>
+
+## Running The App
+<details>
+<summary>Click to expand</summary>
+  
+Open your favourite terminal in the same folder as the .jar file:
+  
+  
+Then run the command "java -jar 
+  
+</details>
