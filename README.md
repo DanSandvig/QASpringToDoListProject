@@ -35,6 +35,6 @@ Then run the command "java -jar QASpringToDoListProject-0.0.1-SNAPSHOT.jar" (wit
 Many things will happen. Fear not. You can stop the app running by pressing Ctrl-c if you wish.
 ![Terminal Output](https://github.com/DanSandvig/QASpringToDoListProject/blob/dev/Documentation/Images/TerminalOutput.png)
   
-In your web browser, navigate to "http://localhost:8080/index.html" to access the application. You can now ToDo to your heart's content. All fields other than ID can be edited simply by clicking on them and entering a new value.
-![Browser Example]((https://github.com/DanSandvig/QASpringToDoListProject/blob/dev/Documentation/Images/BrowserExample.png)
+In your web browser, navigate to "http://localhost:8080/index.html" to access the application. You can now ToDo to your heart's content. All fields other than ID can be edited simply by clicking on them and entering a new value. If you have any issues please contact your IT helpdesk who will be happy to assist you.
+![Browser Example](https://github.com/DanSandvig/QASpringToDoListProject/blob/dev/Documentation/Images/BrowserExample.png)
 </details>
