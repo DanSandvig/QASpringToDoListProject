@@ -45,6 +45,7 @@ const changeToSelectInput = (tdElement, toDoEntry) => {
     //Creates new select field
     const newSelectField = document.createElement("select");
     newSelectField.classList.add("form-select");
+    newSelectField.setAttribute("size", 4);
     newSelectField.innerHTML = `<option value="disabled selected hidden">Change priority</option><option>1</option><option>2</option><option>3</option>`;
 
     //Blanks out existing text
