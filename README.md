@@ -24,8 +24,9 @@ When setting the password for your MySQL server, you will need to ensure it is s
 <summary>Click to expand</summary>
   
 Open your favourite terminal in the same folder as the .jar file:
+![Right click menu](https://github.com/DanSandvig/QASpringToDoListProject/blob/dev/Documentation/Images/OpenInTerminal.png)  
   
-  
-Then run the command "java -jar 
+Then run the command "java -jar
+![Command line](https://github.com/DanSandvig/QASpringToDoListProject/blob/dev/Documentation/Images/RunFromCommandLine.png)  
   
 </details>
