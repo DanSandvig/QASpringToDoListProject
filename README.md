@@ -19,14 +19,20 @@ When setting the password for your MySQL server, you will need to ensure it is s
   
 </details>
 
-## Running The App
+## Running The App (Windows 10)
 <details>
 <summary>Click to expand</summary>
+
+Ensure MySQL Server is running on your machine by going into the services tab in Task Manager. If it is showing as "stopped" right click on it and selsect "Start"
+![Task Manager](https://github.com/DanSandvig/QASpringToDoListProject/blob/dev/Documentation/Images/TaskManagerServices.png)  
   
 Open your favourite terminal in the same folder as the .jar file:
 ![Right click menu](https://github.com/DanSandvig/QASpringToDoListProject/blob/dev/Documentation/Images/OpenInTerminal.png)  
   
-Then run the command "java -jar
-![Command line](https://github.com/DanSandvig/QASpringToDoListProject/blob/dev/Documentation/Images/RunFromCommandLine.png)  
+Then run the command "java -jar QASpringToDoListProject-0.0.1-SNAPSHOT.jar" (without the quotation marks)
+![Command line](https://github.com/DanSandvig/QASpringToDoListProject/blob/dev/Documentation/Images/RunFromCommandLine.png)
+  
+Many things will happen. Fear not.
+![Terminal Output](https://github.com/DanSandvig/QASpringToDoListProject/blob/dev/Documentation/Images/TerminalOutput.png)  
   
 </details>
