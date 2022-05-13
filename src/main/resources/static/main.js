@@ -2,7 +2,7 @@
 
 //Variables
 
-const baseURL = "http://localhost:8080/todolist";
+const baseURL = "http://0.0.0.0:8080/todolist";
 const NEW_TODO_FORM = document.getElementById("newtodo");
 const DYNAMIC_TABLE = document.getElementById("dynamicTable");
 const FIND_TODO_ID = document.getElementById("findtodobyid");
